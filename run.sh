@@ -1,5 +1,8 @@
 #!/bin/bash
 
-(cd src && javac -g -d ../bin edu/harvard/cs262/ComputeServer/*.java group8/*.java)
-(cd bin && rmic group8.TestServerForWorker && rmiregistry &)
-(cd bin && java -Djava.security.policy=../stupid.policy group8.TestServerForWorker)
+(cd bin && rmiregistry &)
+(cd bin && java -Djava.security.policy=../stupid.policy group8.Worker &)
+(cd bin && java -Djava.security.policy=../stupid.policy group8.TestServerForWorker &)
+
+# wait
+# trap "kill 0" SIGINT SIGTERM EXIT

@@ -12,6 +12,7 @@ import edu.harvard.cs262.ComputeServer.WorkTask;
 public class Worker implements ComputeServer {
 
   public Object sendWork(WorkTask work) throws RemoteException {
+    System.out.println("sendWork called on worker");
     return work.doWork();
   }
 
@@ -25,7 +26,7 @@ public class Worker implements ComputeServer {
         System.setSecurityManager(new SecurityManager());
       }
       
-      String serverName = "Server";
+      String serverName = "TestServerForWorker";
       Registry registry = LocateRegistry.getRegistry(args[0]);
       WorkQueue serverStub = (WorkQueue) registry.lookup(serverName);
 

@@ -35,7 +35,7 @@ public class TestServerForWorker implements WorkQueue {
       WorkQueue serverStub = (WorkQueue)UnicastRemoteObject.exportObject(server);
       
       Registry registry = LocateRegistry.getRegistry();
-      registry.bind("TestServerForWorker", serverStub);
+      registry.rebind("TestServerForWorker", serverStub); // rebind to avoid AlreadyBoundException
       
       System.out.println("Server ready");
     } catch (Exception e) {
