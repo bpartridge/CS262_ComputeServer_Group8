@@ -1,0 +1,5 @@
+#!/bin/bash
+
+(cd src && javac -g -d ../bin edu/harvard/cs262/ComputeServer/*.java group8/*.java)
+(cd bin && rmic group8.TestServerForWorker && rmiregistry &)
+(cd bin && java -Djava.security.policy=../stupid.policy group8.TestServerForWorker)
