@@ -75,27 +75,11 @@ public class QueuedServer implements ComputeServer, WorkQueue {
       }
 
       QueuedServer server = new QueuedServer();
-      //WorkQueue serverStub = (WorkQueue)UnicastRemoteObject.exportObject(server);
       ComputeServer serverStub = (ComputeServer)UnicastRemoteObject.exportObject(server);
       
       Registry registry = LocateRegistry.getRegistry();
-      //registry.rebind("WorkQueue", serverStub); // rebind to avoid AlreadyBoundException
       registry.rebind("ComputeServer", serverStub); // rebind to avoid AlreadyBoundException
       System.out.println("Server ready");
-      
-      /*
-      int i = server.workerCount;
-      while (i == 0){
-      	//block until worker has registered
-      	//System.out.println(server.workerStub);
-      	i = server.workerCount;
-      	System.out.println(i);
-      }
-      
-      //simulate task sent from client
-      Pi task = new Pi(3);
-      server.sendWork(task);
-			*/
 	      
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
