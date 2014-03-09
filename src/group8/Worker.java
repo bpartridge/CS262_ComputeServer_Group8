@@ -26,8 +26,8 @@ public class Worker implements ComputeServer {
         System.setSecurityManager(new SecurityManager());
       }
       
-      String serverName = "ComputeServer";
-      Registry registry = LocateRegistry.getRegistry();
+      String serverName = args[1];
+      Registry registry = LocateRegistry.getRegistry(args[0]);
       WorkQueue serverStub = (WorkQueue) registry.lookup(serverName);
 
       ComputeServer myWorker = new Worker();

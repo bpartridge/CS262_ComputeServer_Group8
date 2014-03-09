@@ -77,13 +77,13 @@ public class QueuedServer implements ComputeServer, WorkQueue {
       QueuedServer server = new QueuedServer();
       ComputeServer serverStub = (ComputeServer)UnicastRemoteObject.exportObject(server);
       
-      Registry registry = LocateRegistry.getRegistry();
-      registry.rebind("ComputeServer", serverStub); // rebind to avoid AlreadyBoundException
+      String serverName = args[1];
+      Registry registry = LocateRegistry.getRegistry(args[0]);
+      registry.rebind(serverName, serverStub); // rebind to avoid AlreadyBoundException
       System.out.println("Server ready");
-	      
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());
     }
-  }	
+  }
 
 }

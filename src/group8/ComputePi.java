@@ -17,11 +17,11 @@ public class ComputePi {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-            String name = "ComputeServer";
-            Registry registry = LocateRegistry.getRegistry();
+            String name = args[1];
+            Registry registry = LocateRegistry.getRegistry(args[0]);
             ComputeServer comp = (ComputeServer) registry.lookup(name);
 
-            Pi task = new Pi(Integer.parseInt(args[0]));
+            Pi task = new Pi(Integer.parseInt(args[2]));
             //Pi task = new Pi(3);
             Object pi = comp.sendWork(task);
             System.out.println(pi);
