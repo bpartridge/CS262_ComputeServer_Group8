@@ -49,15 +49,20 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 		Object res = null;
 		
 		if(freeWorkers.peekFirst() != null) {
-			UUID workerID = freeWorkers.removeFirst();
+			UUID workerID = freeWorkers.removeFirst();			
 			busyWorkers.addLast(workerID);
 			ComputeServer myWorker = workers.get(workerID);
-    	
-    	res = myWorker.sendWork(work);
-    	//System.out.println(res);
 
-    	freeWorkers.addLast(workerID);
-    	busyWorkers.remove(workerID);
+			try{				
+				if(myWorker.PingServer()){   
+	    		res = myWorker.sendWork(work);
+	    		freeWorkers.addLast(workerID);
+    			busyWorkers.remove(workerID);
+	    	}
+    	}catch(RemoteException e){
+    		  System.err.println("RemoteException: can't ping worker");
+    		  this.unregisterWorker(workerID);
+    	}
 		}
 		
 		return res;
