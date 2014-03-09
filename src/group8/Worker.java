@@ -42,37 +42,37 @@ public class Worker implements ComputeServer {
       boolean reg = true;
       while(true)
       {
-      	System.out.println("\n====== Menu ======");
-      	System.out.println("u: unregister\nr: register\n");
-				String s = scan.next();
-				if(s.equals("u"))
-				{
-					if(reg)
-					{
-			      serverStub.unregisterWorker(myWorkerID);
-			      reg = false;
-			      System.out.println("Worker unregistered.");
-			    }
-			    else
-			    {
-			    	System.out.println("Error: not registered.");
-			    }
-		    }
-		    else if(s.equals("r"))
-		    {
-		    	if(!reg)
-		    	{
-						myWorkerID = serverStub.registerWorker(myWorkerStub);
-						reg = true;
-	      		System.out.println("Worker registered.");    
-	      	}
-	      	else
-	      	{
-	      		System.out.println("Error: already registered.");
-	      	}
-		    }
-	    }
-			//System.exit(0);
+        System.out.println("\n====== Menu ======");
+        System.out.println("u: unregister\nr: register\n");
+        String s = scan.next();
+        if(s.equals("u"))
+        {
+          if(reg)
+          {
+            serverStub.unregisterWorker(myWorkerID);
+            reg = false;
+            System.out.println("Worker unregistered.");
+          }
+          else
+          {
+            System.out.println("Error: not registered.");
+          }
+        }
+        else if(s.equals("r"))
+        {
+          if(!reg)
+          {
+            myWorkerID = serverStub.registerWorker(myWorkerStub);
+            reg = true;
+            System.out.println("Worker registered.");    
+          }
+          else
+          {
+            System.out.println("Error: already registered.");
+          }
+        }
+      }
+      //System.exit(0);
 
     } catch (Exception e) {
       System.err.println("Worker exception: " + e.toString());
