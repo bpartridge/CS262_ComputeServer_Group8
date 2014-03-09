@@ -26,16 +26,17 @@ public class Worker implements ComputeServer {
         System.setSecurityManager(new SecurityManager());
       }
       
-      String serverName = "TestServerForWorker";
-      Registry registry = LocateRegistry.getRegistry(args[0]);
+      String serverName = "ComputeServer";
+      Registry registry = LocateRegistry.getRegistry();
       WorkQueue serverStub = (WorkQueue) registry.lookup(serverName);
 
       ComputeServer myWorker = new Worker();
       ComputeServer myWorkerStub = (ComputeServer)UnicastRemoteObject.exportObject(myWorker);
-
       serverStub.registerWorker(myWorkerStub);
-
-      System.out.println("Worker registered");
+      System.out.println("Worker registered");    
+      
+      //unregister option??
+      
     } catch (Exception e) {
       System.err.println("Worker exception: " + e.toString());
     }
