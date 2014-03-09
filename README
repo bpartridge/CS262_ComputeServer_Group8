@@ -1,0 +1,15 @@
+To compile all files:
+
+    ./compile.sh
+
+Class files and stubs will be placed in the "bin" directory.
+
+Begin by running the RMI registry on the default port. Note its hostname (possibly localhost).
+
+Run the following commands for each part of the system, substituting the rmiregistry host name for $REGISTRY_HOST_NAME, a consistent server name such as ComputeServer for $SERVER_NAME, and arguments as needed for tasks such as $DIGITS_OF_PI.
+
+    (cd bin && java -Djava.security.policy=../general.policy group8.QueuedServer $REGISTRY_HOST_NAME $SERVER_NAME)
+
+    (cd bin && java -Djava.security.policy=../general.policy group8.Worker $REGISTRY_HOST_NAME $SERVER_NAME)
+    
+    (cd bin && java -Djava.security.policy=../general.policy group8.ComputePi $REGISTRY_HOST_NAME $SERVER_NAME $DIGITS_OF_PI)
