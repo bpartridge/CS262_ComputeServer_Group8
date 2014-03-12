@@ -239,7 +239,14 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 			return true;
 		}
 	}
-		
+	
+	/*
+	 * sendWork
+	 * @param work - A WorkTask that the user would like to be done remotely
+	 * This method creates a semaphore and a Dispatcher, and then associates 
+	 * the Dispatcher with the semaphore. It then wait until the Dispatcher
+	 * future completes
+	 */
 	@Override
 	public Object sendWork(WorkTask work) throws RemoteException {
 		Object res = null;
