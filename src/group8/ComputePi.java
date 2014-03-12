@@ -28,7 +28,7 @@ public class ComputePi {
 			if(args.length >= 4){
 				digits = Integer.parseInt(args[3]);
 			}
-            Pi task = new Pi(Integer.parseInt(digits));
+            Pi task = new Pi(digits);
             Object pi = comp.sendWork(task);
             System.out.println(pi);
         } catch (Exception e) {
