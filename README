@@ -1,15 +1,35 @@
+# Distributed Compute Server for CS 262 (Group 8) #
+
+Group members: Brenton Partridge, Ore B, Holly Anderson
+
+## COMPILATION ##
+
 To compile all files:
 
     ./compile.sh
 
-Class files and stubs will be placed in the "bin" directory.
+Class files and stubs will be placed in the "bin/" directory.
 
-Begin by running the RMI registry on the default port. Note its hostname (possibly localhost).
+## GENERAL RMI CONSIDERATIONS ##
 
-Run the following commands for each part of the system, substituting the rmiregistry host name for $REGISTRY_HOST_NAME, a consistent server name such as ComputeServer for $SERVER_NAME, and arguments as needed for tasks such as $DIGITS_OF_PI.
+Begin by running the RMI registry on the default port in the background with `rmiregistry &`. Note its hostname. If running on the same machine as any other components of the system, it should be run without arguments from the "bin/" directory to avoid classpath problems.
 
-    (cd bin && java -Djava.security.policy=../general.policy group8.QueuedServer $REGISTRY_HOST_NAME $SERVER_NAME)
+In order for a worker running on an uncontrolled host (with an uncontrolled codebase) to be able to access the class files that implement client tasks, the following conditions must be true:
 
-    (cd bin && java -Djava.security.policy=../general.policy group8.Worker $REGISTRY_HOST_NAME $SERVER_NAME)
+(1) The client must make its codebase available over HTTP. We recommend running a simple HTTP server whose root is the directory in which class files are organized by package (for Group 8, this is the "bin/" directory. For instance, `(cd bin && python -m SimpleHTTPServer)` will serve the codebase on port 8000 by default.
+
+(2) The client must broadcast the codebase address by specifying `-Djava.rmi.server.codebase="http://$CLIENT_HOST_NAME:$CLIENT_CODEBASE_PORT"` on the command line, where $CLIENT_HOST_NAME must resolve to the public IP address of whatever machine is running the HTTP server from (1), and $CLIENT_CODEBASE_PORT is the port of the HTTP server from (1).
+
+(3) The server and worker must EACH permit dynamic code loading from client-specified codebase addresses by specifying `-Djava.rmi.server.useCodebaseOnly=false` on the command line. No specific information is needed about addresses of other machines.
+
+These requirements are implemented in the usage instructions below.
+
+## USAGE FOR GROUP 8 COMPONENTS ##
+
+After starting the rmiregistry and the codebase server as explained above, run the following commands for each part of the system (possibly but not necessarily on separate machines), substituting the rmiregistry host name and port for $REGISTRY_HOST_NAME and $REGISTRY_PORT respectively; $CLIENT_HOST_NAME and $CLIENT_CODEBASE_PORT as explained in (2) above; an arbitrary but consistent server name such as ComputeServer for $SERVER_NAME; and arguments as needed for tasks such as $DIGITS_OF_PI.
+
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false group8.QueuedServer $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
+
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false group8.Worker $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
     
-    (cd bin && java -Djava.security.policy=../general.policy group8.ComputePi $REGISTRY_HOST_NAME $SERVER_NAME $DIGITS_OF_PI)
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.codebase="http://$CLIENT_HOST_NAME:$CLIENT_CODEBASE_PORT/" group8.ComputePi $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT $DIGITS_OF_PI)
