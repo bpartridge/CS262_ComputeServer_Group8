@@ -119,9 +119,9 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 
 			}
 	
-		}
+		} // end Forwarder
 
-		//Our overriding of the Callable<Object> call method so do our work
+		//Dispatcher's overriding of the Callable<Object> call method to do our work
 		@Override
 		public Object call(){
 			//A Dispatcher, when called, will infinitely re-attempt a task until it is complete
