@@ -22,14 +22,16 @@ In order for a worker running on an uncontrolled host (with an uncontrolled code
 
 (3) The server and worker must EACH permit dynamic code loading from client-specified codebase addresses by specifying `-Djava.rmi.server.useCodebaseOnly=false` on the command line. No specific information is needed about addresses of other machines.
 
+Additionally, any component must pass the **public** (publicly resolvable) host name or IP address of the machine it is running on, as the command line option "-Djava.rmi.server.hostname=$MY_PUBLIC_HOST_NAME", so that the rmiregistry communicates the public IP rather than an internal IP to other components.
+
 These requirements are implemented in the usage instructions below.
 
 ## USAGE FOR GROUP 8 COMPONENTS ##
 
 After starting the rmiregistry and the codebase server as explained above, run the following commands for each part of the system (possibly but not necessarily on separate machines), substituting the rmiregistry host name and port for $REGISTRY_HOST_NAME and $REGISTRY_PORT respectively; $CLIENT_HOST_NAME and $CLIENT_CODEBASE_PORT as explained in (2) above; an arbitrary but consistent server name such as ComputeServer for $SERVER_NAME; and arguments as needed for tasks such as $DIGITS_OF_PI.
 
-    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false group8.QueuedServer $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false -Djava.rmi.server.hostname=$MY_PUBLIC_HOST_NAME group8.QueuedServer $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
 
-    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false group8.Worker $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.useCodebaseOnly=false -Djava.rmi.server.hostname=$MY_PUBLIC_HOST_NAME group8.Worker $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT)
     
-    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.codebase="http://$CLIENT_HOST_NAME:$CLIENT_CODEBASE_PORT/" group8.ComputePi $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT $DIGITS_OF_PI)
+    (cd bin && java -Djava.security.policy=../general.policy -Djava.rmi.server.codebase="http://$CLIENT_HOST_NAME:$CLIENT_CODEBASE_PORT/" -Djava.rmi.server.hostname=$MY_PUBLIC_HOST_NAME group8.ComputePi $REGISTRY_HOST_NAME $SERVER_NAME $REGISTRY_PORT $DIGITS_OF_PI)
