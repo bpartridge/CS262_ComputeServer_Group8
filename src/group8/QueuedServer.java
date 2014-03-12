@@ -103,6 +103,7 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 								boolean done = !future.cancel(true);
 								if(done){
 									this.qs.freeWorkers.add(workerID);
+									this.qs.freeWorkers.notify();
 									this.qs.sems.remove(workerID);
 									this.qs.results.remove(this.task);
 									this.qs.busyWorkers.remove(workerID);
@@ -111,6 +112,7 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 							} else {
 
 								this.qs.freeWorkers.add(workerID);
+								this.qs.freeWorkers.notify();
 								this.qs.sems.remove(workerID);
 								this.qs.results.remove(this.task);
 								this.qs.busyWorkers.remove(workerID);
@@ -188,9 +190,12 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 
       QueuedServer server = new QueuedServer();
       ComputeServer serverStub = (ComputeServer)UnicastRemoteObject.exportObject(server);
-
+	  int port = 1099;
+	  if(args.length >= 3){
+	  	port = Integer.parseInt(args[2]);
+	  }
       String serverName = args[1];
-      Registry registry = LocateRegistry.getRegistry(args[0]);
+      Registry registry = LocateRegistry.getRegistry(args[0], port);
       registry.rebind(serverName, serverStub); // rebind to avoid AlreadyBoundException
       System.out.println("Server ready");
     } catch (Exception e) {

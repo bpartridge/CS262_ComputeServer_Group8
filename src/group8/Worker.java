@@ -27,10 +27,14 @@ public class Worker implements ComputeServer {
       if (System.getSecurityManager() == null) {
         System.setSecurityManager(new SecurityManager());
       }
-      
+	  int port = 1099;
+	  if(args.length >= 3){
+	  	port = Integer.parseInt(args[2]);
+	  }
+
       //String serverName = "ComputeServer";
       String serverName = args[1];
-      Registry registry = LocateRegistry.getRegistry(args[0]);
+      Registry registry = LocateRegistry.getRegistry(args[0], port);
       WorkQueue serverStub = (WorkQueue) registry.lookup(serverName);
 
       ComputeServer myWorker = new Worker();
