@@ -21,8 +21,7 @@ public class ComputePi {
             Registry registry = LocateRegistry.getRegistry(args[0]);
             ComputeServer comp = (ComputeServer) registry.lookup(name);
 
-            //Pi task = new Pi(Integer.parseInt(args[2]));
-            Pi task = new Pi(9);
+            Pi task = new Pi(Integer.parseInt(args[2]));
             Object pi = comp.sendWork(task);
             System.out.println(pi);
         } catch (Exception e) {
