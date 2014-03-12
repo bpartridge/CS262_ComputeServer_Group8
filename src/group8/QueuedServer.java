@@ -104,6 +104,7 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 								if(done){
 									this.qs.freeWorkers.add(workerID);
 									this.qs.sems.remove(workerID);
+									this.qs.results.remove(this.task);
 									this.qs.busyWorkers.remove(workerID);
 									return future.get();
 								}
@@ -111,6 +112,7 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 
 								this.qs.freeWorkers.add(workerID);
 								this.qs.sems.remove(workerID);
+								this.qs.results.remove(this.task);
 								this.qs.busyWorkers.remove(workerID);
 								return res;
 							}
