@@ -148,7 +148,7 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 				return true;
 			}
 			Semaphore sem = this.sems.get(workerID);
-			if(sem == null){
+			if(sem != null){
 				sem.release();
 			}
 		
