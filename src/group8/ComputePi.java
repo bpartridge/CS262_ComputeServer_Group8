@@ -17,11 +17,18 @@ public class ComputePi {
             System.setSecurityManager(new SecurityManager());
         }
         try {
+			int port = 1099;
+			if(args.length >= 3){
+				port = Integer.parseInt(args[2]);
+			}
             String name = args[1];
-            Registry registry = LocateRegistry.getRegistry(args[0]);
+            Registry registry = LocateRegistry.getRegistry(args[0], port);
             ComputeServer comp = (ComputeServer) registry.lookup(name);
-
-            Pi task = new Pi(Integer.parseInt(args[2]));
+			int digits = 10;
+			if(args.length >= 4){
+				digits = Integer.parseInt(args[3]);
+			}
+            Pi task = new Pi(Integer.parseInt(digits));
             Object pi = comp.sendWork(task);
             System.out.println(pi);
         } catch (Exception e) {

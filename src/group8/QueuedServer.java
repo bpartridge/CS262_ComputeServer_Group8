@@ -18,6 +18,7 @@ import edu.harvard.cs262.ComputeServer.ComputeServer;
 import edu.harvard.cs262.ComputeServer.WorkQueue;
 import edu.harvard.cs262.ComputeServer.WorkTask;
 
+
 public class QueuedServer implements ComputeServer, WorkQueue {
 	private static final int NTHREADS = 32;
 	private Hashtable<UUID, ComputeServer> workers;
@@ -39,6 +40,9 @@ public class QueuedServer implements ComputeServer, WorkQueue {
 
 	
 	//Finds an open Worker and dispatches a task out to it
+	/*
+	 * Dispatcher 
+	 */
 	private class Dispatcher implements Callable<Object> {
 		//The parent queue server this 
 		private QueuedServer qs;
