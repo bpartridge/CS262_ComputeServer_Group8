@@ -13,9 +13,9 @@ import edu.harvard.cs262.ComputeServer.WorkQueue;
 import edu.harvard.cs262.ComputeServer.WorkTask;
 import group8.*;
 
-
-/* this calculation of an approximation of e was taken from user Zed on
- http://stackoverflow.com/questions/1481780/better-approximation-of-e-with-java
+/* 
+	This calculation of factorial was taken from user Zed on StackOverflow at
+ 	http://stackoverflow.com/questions/1481780/better-approximation-of-e-with-java
 */
 
 public class EApprox implements WorkTask, Serializable {
@@ -28,9 +28,6 @@ public class EApprox implements WorkTask, Serializable {
         this.digits = digits;
     }
 
-    /*
-     * Calculate e.
-     */
     public BigDecimal doWork() {
         return computeE(digits);
     }

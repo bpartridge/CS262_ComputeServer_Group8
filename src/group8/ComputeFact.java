@@ -11,6 +11,11 @@ import edu.harvard.cs262.ComputeServer.WorkQueue;
 import edu.harvard.cs262.ComputeServer.WorkTask;
 import group8.*;
 
+/* 
+	This client code was edited from the version on the RMI tutorial at
+	http://docs.oracle.com/javase/tutorial/rmi/
+*/
+
 public class ComputeFact {
     public static void main(String args[]) {
         if (System.getSecurityManager() == null) {

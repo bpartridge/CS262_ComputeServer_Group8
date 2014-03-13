@@ -12,6 +12,11 @@ import edu.harvard.cs262.ComputeServer.WorkQueue;
 import edu.harvard.cs262.ComputeServer.WorkTask;
 import group8.*;
 
+/* 
+	This calculation of pi was taken from the RMI tutorial at
+	http://docs.oracle.com/javase/tutorial/rmi/
+*/
+
 public class Pi implements WorkTask, Serializable {
 
     private static final long serialVersionUID = 227L;
