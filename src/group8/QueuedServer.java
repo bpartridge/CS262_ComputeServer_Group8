@@ -18,7 +18,6 @@ import edu.harvard.cs262.ComputeServer.ComputeServer;
 import edu.harvard.cs262.ComputeServer.WorkQueue;
 import edu.harvard.cs262.ComputeServer.WorkTask;
 
-
 public class QueuedServer implements ComputeServer, WorkQueue {
 	private static final int NTHREADS = 32;
 	private Hashtable<UUID, ComputeServer> workers;
@@ -272,15 +271,22 @@ public class QueuedServer implements ComputeServer, WorkQueue {
         System.setSecurityManager(new SecurityManager());
       }
 
+			//Create new QueuedServer and ComputeServer stub
       QueuedServer server = new QueuedServer();
       ComputeServer serverStub = (ComputeServer)UnicastRemoteObject.exportObject(server);
-	  int port = 1099;
-	  if(args.length >= 3){
-	  	port = Integer.parseInt(args[2]);
-	  }
+	  	
+	  	//Input
+	  	// args[0]: IP (registry)
+			// args[1]: Server name
+			// args[2]: Port (registry)
       String serverName = args[1];
+      int port = Integer.parseInt(args[2]);
+      
+      //Look up appropriate registry using inputs and (re)bind stub to input server name
       Registry registry = LocateRegistry.getRegistry(args[0], port);
-      registry.rebind(serverName, serverStub); // rebind to avoid AlreadyBoundException
+      registry.rebind(serverName, serverStub); //rebind to avoid AlreadyBoundException
+      
+      //Print verification message
       System.out.println("Server ready");
     } catch (Exception e) {
       System.err.println("Server exception: " + e.toString());

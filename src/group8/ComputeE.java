@@ -22,22 +22,29 @@ public class ComputeE {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-			int port = 1099;
-			if(args.length >= 3){
-				port = Integer.parseInt(args[2]);
-			}
+        		//Input
+        		// args[0]: IP (registry)
+						// args[1]: Server name
+						// args[2]: Port (registry)
+						// args[3]: parameter for EApprox
             String name = args[1];
+						int port = Integer.parseInt(args[2]);
+						int n = Integer.parseInt(args[3]);
+						
+						//Look up appropriate registry and server	using inputs
             Registry registry = LocateRegistry.getRegistry(args[0], port);
-            ComputeServer comp = (ComputeServer) registry.lookup(name);
-			int digits = 10;
-			if(args.length >= 4){
-				digits = Integer.parseInt(args[3]);
-			}
-            EApprox task = new EApprox(digits);
+            ComputeServer comp = (ComputeServer)registry.lookup(name);
+           
+            //Create new EApprox object
+            EApprox task = new EApprox(n);
+            
+            //Send work to appropriate server
             Object res = comp.sendWork(task);
+            
+            //Print result of task execution
             System.out.println(res);
         } catch (Exception e) {
-            System.err.println("ComputePi exception:");
+            System.err.println("ComputeE exception:");
             e.printStackTrace();
         }
     }    

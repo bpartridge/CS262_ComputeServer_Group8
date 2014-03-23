@@ -13,7 +13,7 @@ import edu.harvard.cs262.ComputeServer.WorkTask;
 import group8.*;
 
 /* 
-	This calculation of pi was taken from the RMI tutorial at
+	This calculation of pi (and comments) was taken from the RMI tutorial at
 	http://docs.oracle.com/javase/tutorial/rmi/
 */
 

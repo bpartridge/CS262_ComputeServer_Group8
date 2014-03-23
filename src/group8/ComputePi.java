@@ -22,19 +22,26 @@ public class ComputePi {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-			int port = 1099;
-			if(args.length >= 3){
-				port = Integer.parseInt(args[2]);
-			}
+						//Inputs
+						// args[0]: IP (registry)
+						// args[1]: Server name
+						// args[2]: Port (registry)
+						// args[3]: parameter for Pi
             String name = args[1];
+            int port = Integer.parseInt(args[2]);
+						int digits = Integer.parseInt(args[3]);
+
+						//Look up appropriate registry and server	using inputs
             Registry registry = LocateRegistry.getRegistry(args[0], port);
-            ComputeServer comp = (ComputeServer) registry.lookup(name);
-			int digits = 10;
-			if(args.length >= 4){
-				digits = Integer.parseInt(args[3]);
-			}
+            ComputeServer comp = (ComputeServer)registry.lookup(name);
+						
+						//Create new Pi object
             Pi task = new Pi(digits);
+            
+            //Send work to appropriate server
             Object pi = comp.sendWork(task);
+            
+            //Print result of task execution
             System.out.println(pi);
         } catch (Exception e) {
             System.err.println("ComputePi exception:");

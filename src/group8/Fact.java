@@ -22,19 +22,21 @@ public class Fact implements WorkTask, Serializable {
 
     private static final long serialVersionUID = 227L;
 		private static final BigDecimal one = BigDecimal.ONE;
-    private final int digits;
+    private final int n;
 
-    public Fact(int digits) {
-        this.digits = digits;
+    public Fact(int n) {
+        this.n = n;
     }
 
     public BigDecimal doWork() {
-        return computeFact(digits);
+        return computeFact(n);
     }
-
-    public static BigDecimal computeFact(int digits) {
+    
+		//Compute factorial of input n
+		//Note: returns 1 if n is non-positive
+    public static BigDecimal computeFact(int n) {
     	BigDecimal fact = one;
-      for(int i=1;i<=digits;i++) {
+      for(int i=1;i<=n;i++) {
 		  	fact = fact.multiply(new BigDecimal(i));
 			}
 			return fact;

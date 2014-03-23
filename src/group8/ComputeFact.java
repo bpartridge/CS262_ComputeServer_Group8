@@ -22,22 +22,29 @@ public class ComputeFact {
             System.setSecurityManager(new SecurityManager());
         }
         try {
-			int port = 1099;
-			if(args.length >= 3){
-				port = Integer.parseInt(args[2]);
-			}
-            String name = args[1];
+        		//Inputs
+        		// args[0]: IP (registry)
+						// args[1]: Server name
+						// args[2]: Port (registry)
+						// args[3]: parameter for Fact
+        	  String name = args[1];
+						int port = Integer.parseInt(args[2]);						
+						int n = Integer.parseInt(args[3]);
+
+						//Look up appropriate registry and server	using inputs
             Registry registry = LocateRegistry.getRegistry(args[0], port);
-            ComputeServer comp = (ComputeServer) registry.lookup(name);
-			int digits = 10;
-			if(args.length >= 4){
-				digits = Integer.parseInt(args[3]);
-			}
-            Fact task = new Fact(digits);
+            ComputeServer comp = (ComputeServer)registry.lookup(name);
+			
+						//Create new Fact object
+            Fact task = new Fact(n);
+            
+            //Send work to appropriate Server
             Object res = comp.sendWork(task);
+            
+            //Print result of task execution
             System.out.println(res);
         } catch (Exception e) {
-            System.err.println("ComputePi exception:");
+            System.err.println("ComputeFact exception:");
             e.printStackTrace();
         }
     }    
