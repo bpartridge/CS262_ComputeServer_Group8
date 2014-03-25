@@ -14,7 +14,7 @@ import edu.harvard.cs262.ComputeServer.WorkTask;
 import group8.*;
 
 /* 
-	This calculation of factorial was taken from user Zed on StackOverflow at
+	This calculation of factorial was taken from user Zed on Stack Overflow at
  	http://stackoverflow.com/questions/1481780/better-approximation-of-e-with-java
 */
 
