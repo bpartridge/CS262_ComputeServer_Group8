@@ -1,6 +1,0 @@
-
-If a worker stub throws a ConnectException (or another exception), should it be re-added back onto the freeWorkers list? (3/9: Not adding back)
-If there are no free workers, should sendWork fail instantly, or wait for a free worker? (3/9: Returns null)
-Should we assume that the rmiregistry is running on the default port? (3/9: Assuming it is on the default port)
-Should workers reconnect if the server goes down? Assuming not, since a WorkQueue does not have any public-facing ping functionality, which would be necessary for the worker to know if the server went down.
-Should clients reconnect if the server goes down? Could just restart the client.
