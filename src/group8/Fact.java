@@ -21,24 +21,24 @@ import group8.*;
 public class Fact implements WorkTask, Serializable {
 
     private static final long serialVersionUID = 227L;
-		private static final BigDecimal one = BigDecimal.ONE;
+	private static final Float one = new Float(1.0);
     private final int n;
 
     public Fact(int n) {
         this.n = n;
     }
 
-    public BigDecimal doWork() {
+    public Float doWork() {
         return computeFact(n);
     }
     
 		//Compute factorial of input n
 		//Note: returns 1 if n is non-positive
-    public static BigDecimal computeFact(int n) {
-    	BigDecimal fact = one;
-      for(int i=1;i<=n;i++) {
-		  	fact = fact.multiply(new BigDecimal(i));
-			}
-			return fact;
+	public static Float computeFact(int n) {
+    	Float fact = one;
+      	for(int i=1;i<=n;i++) {
+			fact = fact * new Float((float) i);
+		}
+		return fact;
     }
 }

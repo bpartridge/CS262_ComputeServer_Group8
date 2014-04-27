@@ -21,28 +21,27 @@ import group8.*;
 public class EApprox implements WorkTask, Serializable {
 
     private static final long serialVersionUID = 227L;
-		private static final BigDecimal one = BigDecimal.ONE;
+	private static final Double one = new Double(1.0);
     private final int n;
 
     public EApprox(int n) {
         this.n = n;
     }
 
-    public BigDecimal doWork() {
+    public Double doWork() {
         return computeE(n);
     }
     
 		//Compute approximation of e as the sum of 1/k! from k=0 to n
 		//Note: appromxiation is calculated to 999 decimal places
 		//Note: returns 1 if n is non-positive
-    public static BigDecimal computeE(int n) {
-    	BigDecimal fact = one;
-    	BigDecimal e = one;
-    	MathContext mc = new MathContext(1000, RoundingMode.HALF_UP);
-      for(int i=1;i<=n;i++) {
-		  	fact = fact.multiply(new BigDecimal(i));
-		  	e = e.add(BigDecimal.ONE.divide(fact, mc), mc);
-			}
-			return e;
+    public static Double computeE(int n) {
+    	Double fact = one;
+    	Double e = one;
+		for(int i=1;i<=n;i++) {
+			fact = fact * new Double((double) i);
+			e = e + 1.0 / fact;
+		}
+		return e;
     }
 }
